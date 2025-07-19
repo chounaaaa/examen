@@ -1,6 +1,7 @@
 import socket
 
-HOST = '127.0.0.1'
+HOST = '127.2.2.1'
+''
 PORT = 12345
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -10,7 +11,7 @@ username = input("ingresar usuario: ")
 client_socket.send(username.encode())
 
 while True:
-    comando = input("ingresar un comando (/adios para despedirse y /personajes pa ver los personajes): ")
+    comando = input("ingresar un comando (/adios para despedirse y /episodios pa ver episodios): ")
     client_socket.send(comando.encode())
 
     if comando == "/adios":

@@ -1,7 +1,7 @@
 import socket
 import requests
 
-HOST = '127.0.0.1'
+HOST = '127.2.2.1'
 PORT = 12345
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,7 +11,6 @@ server_socket.listen(1)
 print("Servidor escuchando en el puerto", PORT)
 
 while True:
-    
     client_socket, address = server_socket.accept()
     print("Conexión establecida con", address)
 
@@ -22,13 +21,13 @@ while True:
         comando = client_socket.recv(1024).decode()
         print("Comando recibido:", comando)
 
-        if comando == "/personajes":
-            response = requests.get("https://rickandmortyapi.com/api/character")
+        if comando == "/episodios":
+            response = requests.get("https://rickandmortyapi.com/api/episode")
             data = response.json()
-            personajes = ""
-            for character in data["results"]:
-                personajes += character["name"] + "\n"
-            client_socket.send(personajes.encode())
+            cantidad_episodios = data["info"]["count"]
+            mensaje = f"La cantidad total de episodios es: {cantidad_episodios}"
+            client_socket.send(mensaje.encode())
+
         elif comando == "/adios":
             client_socket.send("Chau bro".encode())
             client_socket.close()
